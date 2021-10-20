@@ -39,7 +39,7 @@ const char* mqtt_server = "104.55.7.237";
 WiFiClient espClient;
 PubSubClient client(espClient);
 unsigned long lastMsg = 0;
-#define MSG_BUFFER_SIZE	(50)
+#define MSG_BUFFER_SIZE (50)
 char msg[MSG_BUFFER_SIZE];
 int value = 0;
 
@@ -126,13 +126,12 @@ void setup() {
 }
 
 void loop() {
-  lox.rangingTest(&measure, false);
+  lox.rangingTest(&measure, true);
   int range = measure.RangeMilliMeter;
   int nodeID = 9;
-  int garageID = 0;
+  int garageID = 1;
   
-  //char* my_msg = scanf("%d:%d:%d", char(range), char(nodeID), char(garageID);
-  String my_msg = String(range) + ":" + String(nodeID) + ":" + String(garageID);
+  String my_msg = "{\"node\":" + String(nodeID) + ",\"garage\":" + String(garageID) + ",\"status\":" + String(range) + ",\"timestamp\":0}";
   Serial.println(my_msg);
   
   if (!client.connected()) {
